@@ -5,16 +5,16 @@
 #define NAKED __attribute__ ((naked))
 
 void InitLib(void);
-void Init_Cydia(void);//ÓÃÓÚÌæ»»ËÞÖ÷³ÌÐòµÄinit_arrayº¯Êý
+void Init_Cydia(void);//ç”¨äºŽæ›¿æ¢å®¿ä¸»ç¨‹åºçš„init_arrayå‡½æ•°
 
 typedef void (*INITFUNC)(void);
 
 __attribute__ ((section (".init_array")))
-INITFUNC init_func=&InitLib;//·ÅÈëµ¥¸öº¯Êý
+INITFUNC init_func=&InitLib;//æ”¾å…¥å•ä¸ªå‡½æ•°
 
-void* dlliblogX = 0;//´æ´¢ÏµÍ³Ô­Ê¼liblog.soÄ£¿éÐÅÏ¢
-void* dllibcutils = 0;//´æ´¢ÏµÍ³libcutils.so
-INITFUNC origin_init = 0;//´æ´¢¿ÉÖ´ÐÐ³ÌÐòÔ­Ê¼init_func
+void* dlliblogX = 0;//å­˜å‚¨ç³»ç»ŸåŽŸå§‹liblog.soæ¨¡å—ä¿¡æ¯
+void* dllibcutils = 0;//å­˜å‚¨ç³»ç»Ÿlibcutils.so
+INITFUNC origin_init = 0;//å­˜å‚¨å¯æ‰§è¡Œç¨‹åºåŽŸå§‹init_func
 
 void* p__android_log_assert=0;
 void* p__android_log_btwrite=0;
@@ -73,7 +73,7 @@ void* pproperty_get=0;
 void* pproperty_list=0;
 void* pproperty_set=0;
 
-//ÐÞ¸ÄÄÚ´æ¿é¾ßÓÐÐ´È¨ÏÞ
+//ä¿®æ”¹å†…å­˜å—å…·æœ‰å†™æƒé™
 void ModForRW(void* base, int length)
 {
 	unsigned int pagesize = getpagesize();
@@ -108,7 +108,7 @@ void Init_Cydia()
 	}
 }
 
-void FakeRunnerInit()//Ìæ»»¿ÉÖ´ÐÐ³ÌÐòÄ£¿éµÄinit_arrayº¯Êý
+void FakeRunnerInit()//æ›¿æ¢å¯æ‰§è¡Œç¨‹åºæ¨¡å—çš„init_arrayå‡½æ•°
 {
 	void* dllibdl = dlopen("libdl.so", RTLD_LAZY | RTLD_GLOBAL);
 	Dl_info liblog_dlinfo;
@@ -117,7 +117,7 @@ void FakeRunnerInit()//Ìæ»»¿ÉÖ´ÐÐ³ÌÐòÄ£¿éµÄinit_arrayº¯Êý
 		return;
 	if(!dladdr((void*)Init_Cydia, &liblog_dlinfo))
 		return;
-	//»ñÈ¡Î±liblog.so»ùÖ·(libAndroidBootstrap0.so)
+	//èŽ·å–ä¼ªliblog.soåŸºå€(libAndroidBootstrap0.so)
 	void* dlliblog = dlopen(liblog_dlinfo.dli_fname, RTLD_LAZY | RTLD_GLOBAL);
 	if(dlliblog)
 	{
@@ -128,22 +128,22 @@ void FakeRunnerInit()//Ìæ»»¿ÉÖ´ÐÐ³ÌÐòÄ£¿éµÄinit_arrayº¯Êý
 		memcpy(filename + prefixlen, "!.so", 5);
 		dlliblogX = dlopen(filename, RTLD_LAZY | RTLD_GLOBAL);
 		if(dlliblogX)
-		{//ÐÞ¸Äinitº¯Êý
+		{//ä¿®æ”¹initå‡½æ•°
 			dllibcutils = dlopen("libcutils.so", RTLD_LAZY | RTLD_GLOBAL);
-			const int mod_size = sizeof(soinfo);//init_funcµÄÏÂÒ»¸öÔªËØ
+			const int mod_size = sizeof(soinfo);//init_funcçš„ä¸‹ä¸€ä¸ªå…ƒç´ 
 
-			//ÐÞ¸ÄÄ£¿éÃûliblog!.soÎªliblog.so
+			//ä¿®æ”¹æ¨¡å—åliblog!.soä¸ºliblog.so
 			ModForRW(dlliblogX, mod_size);
 			strcpy((char*)((soinfo*)dlliblogX)->name, (char*)((soinfo*)dlliblog)->name);
 
-			//ÐÞ¸ÄÄ£¿éÃûliblog.soÎªlibAndroidBootstrap0.so
+			//ä¿®æ”¹æ¨¡å—åliblog.soä¸ºlibAndroidBootstrap0.so
 			ModForRW(dlliblog, mod_size);
 			strcpy((char*)((soinfo*)dlliblogX)->name, "libAndroidBootstrap0.so");
 
-			//ÐÞ¸Ä¿ÉÖ´ÐÐ³ÌÐòinit_func
+			//ä¿®æ”¹å¯æ‰§è¡Œç¨‹åºinit_func
 			soinfo* elfhost = ((soinfo*)dllibdl)->next;
 			origin_init = elfhost->init_func;
-			ModForRW((void*)elfhost->init_func, sizeof(void*));//Ô´ÂëÖÐÓÐÎó
+			ModForRW((void*)elfhost->init_func, sizeof(void*));//æºç ä¸­æœ‰è¯¯
 			elfhost->init_func = Init_Cydia;
 		}
 	}
@@ -503,6 +503,3 @@ EXPORT(filterPriToChar)
 EXPORT(property_get)
 EXPORT(property_list)
 EXPORT(property_set)
-
-
-

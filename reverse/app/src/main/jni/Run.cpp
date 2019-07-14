@@ -1,5 +1,5 @@
 /*
- * ÒÔÏÂ´úÂë¾ùÎ´¿¼ÂÇ»º³åÇøÒç³ö
+ * ä»¥ä¸‹ä»£ç å‡æœªè€ƒè™‘ç¼“å†²åŒºæº¢å‡º
  */
 
 #include "Common.h"
@@ -109,7 +109,7 @@ void Run_do_link(const char** argv)
 					status = domakelink((packagelibpath + "libsubstrate-dvm.so").c_str(), "/system/lib/libsubstrate-dvm.so");
 				dochown("/vendor");
 				dochown("/vendor/lib");
-				//LD_LIBRARY_PATH /vendor/lib:/system/lib ¿É¼ûÏÈËÑË÷vendor
+				//LD_LIBRARY_PATH /vendor/lib:/system/lib å¯è§å…ˆæœç´¢vendor
 				if(status != -1)
 					status = domakelink("/system/lib/liblog.so", "/vendor/lib/liblog!.so");
 				if(status != -1)
@@ -275,5 +275,5 @@ int main(int argc, const char** argv, const char** envp)
 		showerror(EINVAL);
 		return -1;
 	}
-	itor->second(argv+2);//´«ÈëºóÃæµÄ²ÎÊý
+	itor->second(argv+2);//ä¼ å…¥åŽé¢çš„å‚æ•°
 }

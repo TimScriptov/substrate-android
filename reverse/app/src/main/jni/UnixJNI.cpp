@@ -43,7 +43,7 @@ JNI_OnLoad(JavaVM *vm, void *reserved)
 }
 
 /*
- * ĞŞ¸ÄÄ¿Â¼ÎÄ¼şÓÃ»§×éÊôĞÔ
+ * ä¿®æ”¹ç›®å½•æ–‡ä»¶ç”¨æˆ·ç»„å±æ€§
  */
 JNIEXPORT void JNICALL
 Java_com_saurik_substrate_Unix_chmod(JNIEnv *env, jclass type, jstring path, jint mode) {
@@ -54,7 +54,7 @@ Java_com_saurik_substrate_Unix_chmod(JNIEnv *env, jclass type, jstring path, jin
 }
 
 /*
- * ĞŞ¸ÄÄ¿Â¼ÎÄ¼şÖ´ĞĞ¶ÁĞ´ÊôĞÔ
+ * ä¿®æ”¹ç›®å½•æ–‡ä»¶æ‰§è¡Œè¯»å†™å±æ€§
  */
 JNIEXPORT void JNICALL
 Java_com_saurik_substrate_Unix_chown(JNIEnv *env, jclass type, jstring path, jint uid, jint gid) {
@@ -65,7 +65,7 @@ Java_com_saurik_substrate_Unix_chown(JNIEnv *env, jclass type, jstring path, jin
 }
 
 /*
- * »ñÈ¡¸¸½ø³Ìid
+ * è·å–çˆ¶è¿›ç¨‹id
  */
 JNIEXPORT jint JNICALL
 Java_com_saurik_substrate_Unix_getppid(JNIEnv *env, jclass type) {
@@ -73,7 +73,7 @@ Java_com_saurik_substrate_Unix_getppid(JNIEnv *env, jclass type) {
 }
 
 /*
- * ËÑË÷ÎÄ¼ş×Ö·û´®
+ * æœç´¢æ–‡ä»¶å­—ç¬¦ä¸²
  */
 JNIEXPORT jboolean JNICALL
 Java_com_saurik_substrate_Unix_grep_1F(JNIEnv *env, jclass type, jstring filepath, jstring tosearch) {
@@ -107,7 +107,7 @@ Java_com_saurik_substrate_Unix_grep_1F(JNIEnv *env, jclass type, jstring filepat
 }
 
 /*
- * É±ËÀ½ø³Ì
+ * æ€æ­»è¿›ç¨‹
  */
 JNIEXPORT void JNICALL
 Java_com_saurik_substrate_Unix_kill(JNIEnv *env, jclass type, jint pid, jint sig) {
@@ -116,7 +116,7 @@ Java_com_saurik_substrate_Unix_kill(JNIEnv *env, jclass type, jint pid, jint sig
 }
 
 /*
- * ´´½¨Ä¿Â¼
+ * åˆ›å»ºç›®å½•
  */
 JNIEXPORT void JNICALL
 Java_com_saurik_substrate_Unix_mkdir(JNIEnv *env, jclass type, jstring path, jint mode) {
@@ -127,7 +127,7 @@ Java_com_saurik_substrate_Unix_mkdir(JNIEnv *env, jclass type, jstring path, jin
 }
 
 /*
- * ¶ÁÈ¡ÈíÁ´½ÓµØÖ·
+ * è¯»å–è½¯é“¾æ¥åœ°å€
  */
 JNIEXPORT jstring JNICALL
 Java_com_saurik_substrate_Unix_readlink(JNIEnv *env, jclass type, jstring path) {
@@ -141,7 +141,7 @@ Java_com_saurik_substrate_Unix_readlink(JNIEnv *env, jclass type, jstring path) 
 }
 
 /*
- * ÖØÓ³Éä·ÖÇø
+ * é‡æ˜ å°„åˆ†åŒº
  */
 JNIEXPORT void JNICALL
 Java_com_saurik_substrate_Unix_remount(JNIEnv *env, jclass type, jstring path, jboolean readonly) {
@@ -155,7 +155,7 @@ Java_com_saurik_substrate_Unix_remount(JNIEnv *env, jclass type, jstring path, j
 }
 
 /*
- * ´´½¨ÈíÁ´½Ó
+ * åˆ›å»ºè½¯é“¾æ¥
  */
 JNIEXPORT void JNICALL
 Java_com_saurik_substrate_Unix_symlink(JNIEnv *env, jclass type, jstring srcpath, jstring dstpath) {
@@ -170,7 +170,7 @@ Java_com_saurik_substrate_Unix_symlink(JNIEnv *env, jclass type, jstring srcpath
 }
 
 /*
- * ÒÆ³ıÈíÁ´½Ó
+ * ç§»é™¤è½¯é“¾æ¥
  */
 JNIEXPORT void JNICALL
 Java_com_saurik_substrate_Unix_unlink(JNIEnv *env, jclass type, jstring path) {

@@ -1,14 +1,7 @@
-/*
- * AndroidLoader.cpp
- *
- *  Created on: 2016Äê5ÔÂ8ÈÕ
- *      Author: Administrator
- */
-
 #include "Common.h"
 
 /*
- * ×¢£ºÒÔÏÂ´úÂë¾ùÎ´¿¼ÂÇ»º³åÇøÒç³ö
+ * æ³¨ï¼šä»¥ä¸‹ä»£ç å‡æœªè€ƒè™‘ç¼“å†²åŒºæº¢å‡º
  */
 
 static bool MSLoaded = false;
@@ -28,7 +21,7 @@ bool UnknownCheck()
 		int fdevent;
 		while((fdevent = open(pathname,O_RDONLY)) == -1)
 		{
-			if(errno != EINTR)//ÎŞ·¨¶ÁÈ¡
+			if(errno != EINTR)//æ— æ³•è¯»å–
 				return false;
 		}
 		unsigned char buf[64];
@@ -46,7 +39,7 @@ bool UnknownCheck()
 }
 
 void DoInject(char* libpath)
-{//´Ósubstrate½Ú»ñÈ¡ĞÅÏ¢½øĞĞÆ¥Åä¾ö¶¨ÊÇ·ñ×¢Èë¸Ã½ø³Ì
+{//ä»substrateèŠ‚è·å–ä¿¡æ¯è¿›è¡ŒåŒ¹é…å†³å®šæ˜¯å¦æ³¨å…¥è¯¥è¿›ç¨‹
 	int dirnamelen = strlen(libpath);
 	DIR* libdir = opendir(libpath);
 	if(!libdir)
@@ -83,7 +76,7 @@ void DoInject(char* libpath)
 						{
 							if(!strcmp(stringtable + shdr_table[i].sh_name, ".substrate"))
 							{
-								//.substrate½ÚÄÚÈİ¼°³¤¶È
+								//.substrateèŠ‚å†…å®¹åŠé•¿åº¦
 								char* info = (char*)base + shdr_table[i].sh_offset;
 								int infolen = shdr_table[i].sh_size;
 								if(infolen)
@@ -175,17 +168,17 @@ JNIEXPORT void  JNICALL MSLoadExtensions()
 {
 	if(MSLoaded)
 		return;
-	if(UnknownCheck())//Î´ÖªÓÃÍ¾
+	if(UnknownCheck())//æœªçŸ¥ç”¨é€”
 		return;
 	int readlen;
 	while((readlen = readlink("/proc/self/exe", selfpath, 1023)) == -1)
 	{
-		if(errno != EINTR)//ÎŞ·¨¶ÁÈ¡
+		if(errno != EINTR)//æ— æ³•è¯»å–
 			return;
 	}
 	selfpath[readlen] = '\0';
 	if(!strcmp(selfpath,"/system/bin/ks") || !strcmp(selfpath,"/system/bin/mcDriverDaemon"))
-		return;//ºÄÊ±²Ù×÷µÄ³ÌĞò²»¼ì²â
+		return;//è€—æ—¶æ“ä½œçš„ç¨‹åºä¸æ£€æµ‹
 	LOGI("MS:Notice: Injecting: %s", selfpath);
 	FILE* fp = fopen("/data/data/com.saurik.substrate/permitted.list", "r");
 	if(fp)
@@ -205,6 +198,3 @@ JNIEXPORT void  JNICALL MSLoadExtensions()
 		fclose(fp);
 	}
 }
-
-
-

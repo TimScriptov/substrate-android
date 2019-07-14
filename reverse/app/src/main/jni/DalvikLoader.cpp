@@ -1,9 +1,3 @@
-/*
- * DalvikLoader.cpp
- *
- *  Created on: 2016Äê5ÔÂ15ÈÕ
- *      Author: Administrator
- */
 #include "Common.h"
 #include "DalvikHeader.h"
 
@@ -71,7 +65,7 @@ DvmDex* pMSdvmDex = 0;
 void InitLib(void);
 typedef void (*INITFUNC)(void);
 __attribute__ ((section (".init_array")))
-INITFUNC init_func=&InitLib;//·ÅÈëµ¥¸öº¯Êý
+INITFUNC init_func=&InitLib;//æ”¾å…¥å•ä¸ªå‡½æ•°
 
 MSImageRef reflibdvm;
 PrimitiveType voidtype;
@@ -123,7 +117,7 @@ void (*dvmThrowExceptionWithClassMessage)(const char* exceptionDescriptor, const
 void l_dvmThrowClassCastException(ClassObject* actual, ClassObject* desired);
 
 
-int dexdatalen = 3220;//dexÎÄ¼þÓÃÓÚÊµÏÖ_MSÀà£¬³Ð½Ósubstrate-api.jarÖÐµÄMSÀàÊµÏÖ
+int dexdatalen = 3220;//dexæ–‡ä»¶ç”¨äºŽå®žçŽ°_MSç±»ï¼Œæ‰¿æŽ¥substrate-api.jarä¸­çš„MSç±»å®žçŽ°
 unsigned char dexdata[]=
 {
 		0x64, 0x65, 0x78, 0x0A, 0x30, 0x33, 0x35, 0x00, 0xE7, 0x04, 0x58, 0x7C, 0x71, 0x2E, 0x61, 0x29,
@@ -434,7 +428,7 @@ void start2(AndroidRuntime* thiz, const char* classname, const char* options)
 int startVm(AndroidRuntime* thiz, JavaVM** pJavaVM, JNIEnv** pEnv)
 {
 	int result = oldstartVm(thiz, pJavaVM, pEnv);
-	if(!result && !g_hooked)//³É¹¦
+	if(!result && !g_hooked)//æˆåŠŸ
 	{
 		char* zygoteClsPath = dvmDotToSlash(zygoteClsName);
 		MSJavaHookClassLoad(*pEnv, zygoteClsPath, zygoteInitLoad, (void*)result);
@@ -636,7 +630,7 @@ void connectJavaHookInner(JNIEnv *env)
 		{
 			while(getline(buf, fp))
 			{
-				strtok_r(buf, " ", &inner_ptr);//Ìø¹ýpackagename
+				strtok_r(buf, " ", &inner_ptr);//è·³è¿‡packagename
 				char* apkpath = strtok_r(0, " ", &inner_ptr);
 				char* mainclass = strtok_r(0, " ", &inner_ptr);
 				if(apkpath && mainclass)
@@ -734,7 +728,7 @@ void hookClassLoad(JNIEnv *env, jobject thiz, jstring str, jobject classLoadHook
 void* DalvikMethodCallback(void** stack, unsigned int* data)
 {
 	/*
-		stack£º					data£º
+		stackï¼š					dataï¼š
 		const u4* args			hookmethod
 		JValue* pResult			invokedmethod
 		const Method* method
@@ -749,13 +743,13 @@ void* DalvikMethodCallback(void** stack, unsigned int* data)
 	Object* hookmethod = MSDecodeIndirectReference(env, (jobject)data[0]);
 	jclass invoke_cls = 0;
 	if(!dvmIsStaticMethod(realmethod))
-	{//·Ç¾²Ì¬º¯ÊýµÚÒ»¸ö²ÎÊýÎªÀà¶ÔÏóµØÖ·
+	{//éžé™æ€å‡½æ•°ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºç±»å¯¹è±¡åœ°å€
 		invoke_cls = (jclass)args[0];
 		args++;
 	}
 	ClassObject* arrayClass = dvmFindArrayClass("[Ljava/lang/Object;", 0);
 	size_t length = dexProtoGetParameterCount(&realmethod->prototype);
-	//¹¹Ôìinvoke(Object obj, Object... objArr)
+	//æž„é€ invoke(Object obj, Object... objArr)
 	ArrayObject* invoke_args = dvmAllocArrayByClass(arrayClass, length, 0);//new Object[]{...}
 	if(invoke_args)
 	{
@@ -886,7 +880,7 @@ jobject moveUnderClassLoader(JNIEnv *env, jobject thiz, jobject classLoader, job
 	{
 		jobject lock = env->CallObjectMethod(clsLoader, SubstrateClassLoader_lock);
 		env->MonitorEnter(lock);//synchronized(lock)
-		jobject single = env->CallObjectMethod(clsLoader, SubstrateClassLoader_get, classLoader);//µ¥Àý
+		jobject single = env->CallObjectMethod(clsLoader, SubstrateClassLoader_get, classLoader);//å•ä¾‹
 		RegisterMSCallback(env, single);
 		MSJavaBlessClassLoader(env, single);
 		env->MonitorExit(lock);

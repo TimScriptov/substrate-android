@@ -35,7 +35,7 @@ public class PackageReceiver extends BroadcastReceiver {
             Utility.updatePermittedList(context);
             String message = "Substrate extensions updated";
             Notification notification = new Notification.Builder(context)
-                    .setSmallIcon(R.drawable.status)
+                    .setSmallIcon(R.drawable.ic_stat_s)
                     .setContentTitle(message)
                     .setContentText("Touch to restart services or select features.")
                     .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, SetupActivity.class), 0))

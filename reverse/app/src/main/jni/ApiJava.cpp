@@ -1,7 +1,6 @@
 #include "Common.h"
 #include "DalvikHeader.h"
 
-
 struct FuncMap
 {
 	Method* method;
@@ -72,7 +71,7 @@ JNIEXPORT void* JNICALL MSCloseFunction(void* callback,void* data)
 		/*
 		 	void* func(JNIEnv* env, jobject jobj,...)
 		 	{
-		 		callback(__ARGS__, data);//µÚÒ»¸ö²ÎÊıÎªfuncµÄ²ÎÊıÕ»£¬°üº¬ËùÓĞ²ÎÊı£¬µÚ¶ş¸ö²ÎÊıÎªdata
+		 		callback(__ARGS__, data);//ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºfuncçš„å‚æ•°æ ˆï¼ŒåŒ…å«æ‰€æœ‰å‚æ•°ï¼Œç¬¬äºŒä¸ªå‚æ•°ä¸ºdata
 		 	}
 			STMFD           SP!, {R0-R3}
 			SUB             SP, SP, #4
@@ -115,13 +114,13 @@ JNIEXPORT void* JNICALL MSCloseFunction(void* callback,void* data)
 
 JNIEXPORT bool MSDebug = false;
 
-struct ModRan//´æ´¢ĞŞ¸ÄµÄÄÚ´æ¿é
+struct ModRan//å­˜å‚¨ä¿®æ”¹çš„å†…å­˜å—
 {
 	unsigned int begin;
 	unsigned int length;
 };
 
-//ĞŞ¸ÄÄÚ´æ¿é¾ßÓĞ¶ÁĞ´Ö´ĞĞÈ¨ÏŞ
+//ä¿®æ”¹å†…å­˜å—å…·æœ‰è¯»å†™æ‰§è¡Œæƒé™
 ModRan* ModForRWEAlloc(void* base, int length)
 {
 	if(!base || !length)
@@ -1366,4 +1365,3 @@ JNIEXPORT void JNICALL MSHookFunction(void *symbol, void *replace, void **result
 		return;
 	MSHookFunctionInner(symbol, replace, result);
 }
-

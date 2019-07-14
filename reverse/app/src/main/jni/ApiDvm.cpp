@@ -1,10 +1,3 @@
-/*
- * ApiDvm.cpp
- *
- *  Created on: 2016Äê5ÔÂ17ÈÕ
- *      Author: lichao26
- */
-
 #include "Common.h"
 #include "DalvikHeader.h"
 #include "jni.h"
@@ -58,7 +51,7 @@ void* MSCloseFunction(void* ,void*);
 typedef void (*INITFUNC)(void);
 void InitLib(void);
 __attribute__ ((section (".init_array")))
-INITFUNC init_func=&InitLib;//·ÅÈëµ¥¸öº¯Êı
+INITFUNC init_func=&InitLib;//æ”¾å…¥å•ä¸ªå‡½æ•°
 
 
 extern "C"
@@ -221,7 +214,7 @@ void HookClass(ClassObject* clazz, MethodCallback callback, void* data)
 	Thread* self = dvmThreadSelf();
 	ClassObject* java_lang_Thread = dvmFindClass("Ljava/lang/Thread;", 0);
 
-	//ÀûÓÃjava.lang.Thread.sleep¹¹ÔìÒ»¸övoid func(long)µÄMethod½á¹¹
+	//åˆ©ç”¨java.lang.Thread.sleepæ„é€ ä¸€ä¸ªvoid func(long)çš„Methodç»“æ„
 	Method* java_lang_Thread_sleep= dvmFindDirectMethodByDescriptor(java_lang_Thread, "sleep", "(J)V");
 	Method*	classLoaded = (Method*)malloc(sizeof(Method));
 	memcpy(classLoaded, java_lang_Thread_sleep, sizeof(Method));
@@ -268,7 +261,7 @@ bool IsObjectContainKey(const ClassObject* clazz)
 	return GetStoredValue(clazz->classLoader, g_ObjKey) != 0;
 }
 
-bool NewdvmLinkClass(ClassObject* clazz)//¼ÓÔØÀàÊ±µ÷ÓÃ
+bool NewdvmLinkClass(ClassObject* clazz)//åŠ è½½ç±»æ—¶è°ƒç”¨
 {
 	bool ret = OlddvmLinkClass(clazz);
 	if(ret)
@@ -324,7 +317,7 @@ bool NewdvmCheckClassAccess(const ClassObject* accessFrom, const ClassObject* cl
 	if((clazz->accessFlags & ACC_PUBLIC) || dvmInSamePackage(accessFrom, clazz))//OlddvmIsPublicClass(clazz))
 		return true;
 	else
-		return IsObjectContainKey(accessFrom);//Ö»Òª°üº¬KeyÔòÎŞÊÓjava²ãÈ¨ÏŞ
+		return IsObjectContainKey(accessFrom);//åªè¦åŒ…å«Keyåˆ™æ— è§†javaå±‚æƒé™
 }
 
 bool NewdvmCheckFieldAccess(const ClassObject* accessFrom, const Field* field)
@@ -332,7 +325,7 @@ bool NewdvmCheckFieldAccess(const ClassObject* accessFrom, const Field* field)
 	if(OlddvmCheckFieldAccess(accessFrom, field))
 		return true;
 	else
-		return IsObjectContainKey(accessFrom);//Ö»Òª°üº¬KeyÔòÎŞÊÓjava²ãÈ¨ÏŞ
+		return IsObjectContainKey(accessFrom);//åªè¦åŒ…å«Keyåˆ™æ— è§†javaå±‚æƒé™
 }
 
 
@@ -341,7 +334,7 @@ bool NewdvmCheckMethodAccess(const ClassObject* accessFrom, const Method* method
 	if(OlddvmCheckMethodAccess(accessFrom, method))
 		return true;
 	else
-		return IsObjectContainKey(accessFrom);//Ö»Òª°üº¬KeyÔòÎŞÊÓjava²ãÈ¨ÏŞ
+		return IsObjectContainKey(accessFrom);//åªè¦åŒ…å«Keyåˆ™æ— è§†javaå±‚æƒé™
 }
 
 JNIEXPORT Object* JNICALL MSDecodeIndirectReference(JNIEnv* env, jobject jobj)
@@ -565,7 +558,7 @@ void MSJavaSetObjectKey(JNIEnv *env, jobject object, MSJavaObjectKey key, void *
 			for(int i = 0;i < curlock;i++)
 			{
 				if(key == mondata[i].key)
-				{//Èç¹ûÓöµ½ÖØ¸´keyÔòÌæ»»Ô­ÓĞÊı¾İ
+				{//å¦‚æœé‡åˆ°é‡å¤keyåˆ™æ›¿æ¢åŸæœ‰æ•°æ®
 					if(mondata[i].clean)
 						mondata[i].clean(mondata[i].data, env, mondata[i].value);
 					mondata[i].value = value;
@@ -575,7 +568,7 @@ void MSJavaSetObjectKey(JNIEnv *env, jobject object, MSJavaObjectKey key, void *
 				}
 			}
 			if(!find)
-			{//Èç¹ûÌí¼ÓµÄÎªÈ«ĞÂkeyÔòÔÚÊı×éÖ®ºóÌí¼ÓÊı¾İ
+			{//å¦‚æœæ·»åŠ çš„ä¸ºå…¨æ–°keyåˆ™åœ¨æ•°ç»„ä¹‹åæ·»åŠ æ•°æ®
 				node->lockCount = curlock + 1;
 				Monitor* newcopy = (Monitor*)realloc(node, sizeof(Monitor) + node->lockCount * sizeof(MonitorData));
 				mondata = (MonitorData*)(newcopy + 1);
@@ -596,4 +589,3 @@ void MSJavaBlessClassLoader(JNIEnv *env, jobject loader)
 {
 	MSJavaSetObjectKey(env, loader, g_ObjKey, (void*)1, 0, 0);
 }
-

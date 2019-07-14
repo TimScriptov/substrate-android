@@ -1,10 +1,3 @@
-/*
- * DalvikHeader.h
- *
- *  Created on: 2016Äê5ÔÂ15ÈÕ
- *      Author: Administrator
- */
-
 #ifndef JNI_DALVIKHEADER_H_
 #define JNI_DALVIKHEADER_H_
 

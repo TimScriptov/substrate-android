@@ -1,11 +1,4 @@
-/*
- * Unix.cpp
- *
- *  Created on: 2016Äê5ÔÂ7ÈÕ
- *      Author: Administrator
- */
 #include "Common.h"
-
 
 #define SYS_utimensat 0
 
@@ -43,7 +36,7 @@ void replaceLinkerEnv(const char* linkerpath,const char* oldenv,const char* newe
 			void* searchpt;
 			void* curp = base;
 			bool finded = false;
-			while(searchpt = memmem(curp, st.st_size, oldenv, strlen(oldenv)))//±¬ËÑÌæ»»
+			while(searchpt = memmem(curp, st.st_size, oldenv, strlen(oldenv)))//çˆ†æœæ›¿æ¢
 			{//first modify memory
 				finded = true;
 				memcpy(searchpt, newenv, strlen(oldenv));

@@ -1,8 +1,5 @@
 package com.saurik.substrate;
 
-/**
- * Created by lichao26 on 2016/5/9.
- */
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;

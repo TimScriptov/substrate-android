@@ -1,20 +1,11 @@
-/*
- * AndroidCydia.cpp
- *
- *  Created on: 2016年5月16日
- *      Author: lichao26
- */
-
-
 #include "Common.h"
-
 
 MSConfig(MSFilterExecutable, "/system/bin/app_process");
 
 void InitLib(void);
 typedef void (*INITFUNC)(void);
 __attribute__ ((section (".init_array")))
-INITFUNC init_func=&InitLib;//放入单个函数
+INITFUNC init_func=&InitLib;//鏀惧叆鍗曚釜鍑芥暟
 
 void (*oldIsInstalled)(JNIEnv *, jobject, ...);
 bool isInstalled(JNIEnv *env, jobject thiz,jobject host, jint port);
