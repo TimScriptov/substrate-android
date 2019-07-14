@@ -1,3 +1,7 @@
+#include <stdint.h>
+#include <jni.h>
+#include <pthread.h>
+
 #ifndef JNI_DALVIKHEADER_H_
 #define JNI_DALVIKHEADER_H_
 

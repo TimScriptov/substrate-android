@@ -1,4 +1,7 @@
-#include "Common.h"
+//#include "Common.h"
+#include <jni.h>
+
+#include "substrate.h"
 
 MSConfig(MSFilterExecutable, "/system/bin/app_process");
 

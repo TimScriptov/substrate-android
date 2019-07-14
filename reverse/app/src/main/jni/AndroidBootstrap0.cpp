@@ -1,5 +1,13 @@
-#include "Common.h"
+//#include "Common.h"
+#include <jni.h>
 #include <unistd.h>
+#include <dlfcn.h>
+#include <sys/mman.h>
+#include <android/log.h>
+#include "linker/linker_soinfo.h"
+
+#define LOG_TAG "CydiaSubstrate"
+#define LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 #define HIDDEN __attribute__ ((visibility ("hidden")))
 #define NAKED __attribute__ ((naked))
@@ -88,7 +96,7 @@ void Init_Cydia()
 	void* dlAndroidLoader = dlopen("/data/data/com.saurik.substrate/lib/libAndroidLoader.so",RTLD_LAZY | RTLD_GLOBAL);
 	if(!dlAndroidLoader)
 	{
-		Log::log("MS:Error: dlsym(): %s\n", dlerror());
+		LOGI("MS:Error: dlsym(): %s\n", dlerror());
 	}
 	else
 	{
@@ -99,7 +107,7 @@ void Init_Cydia()
 		}
 		else
 		{
-			Log::log("MS:Error: dlsym(): %s\n", dlerror());
+			LOGI("MS:Error: dlsym(): %s\n", dlerror());
 		}
 	}
 	if(origin_init)

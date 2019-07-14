@@ -2,8 +2,11 @@
  * 以下代码均未考虑缓冲区溢出
  */
 
-#include "Common.h"
+//#include "Common.h"
+ 
 #include <vector>
+#include <string>
+
 using namespace std;
 
 #define arraysize(x) (sizeof(x)/sizeof(x[0]))

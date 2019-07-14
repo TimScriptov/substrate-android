@@ -1,5 +1,11 @@
-#include "Common.h"
+//#include "Common.h"
+#include <jni.h>
+#include <android/log.h>
+#include <sys/mman.h> 
+#include <array>
+
 #include "DalvikHeader.h"
+#include "substrate.h"
 
 #define LOGI(...)  __android_log_print(ANDROID_LOG_INFO, "CydiaSubstrate", __VA_ARGS__)
 
@@ -639,7 +645,7 @@ void connectJavaHookInner(JNIEnv *env)
 					dosafe(status, access(apkpath, R_OK));
 					if(status == 0)//all permission granted
 					{
-						Log::log("MS:Notice: Loading: %s", apkpath);
+						LOGI("MS:Notice: Loading: %s", apkpath);
 						jstring tmp1 = env->NewStringUTF(apkpath);
 						jobject SubstrateClassLoader = env->NewObject(jSubstrateClassLoader, SubstrateClassLoader_init, tmp1, OSystemClassLoader);
 						env->DeleteLocalRef(tmp1);

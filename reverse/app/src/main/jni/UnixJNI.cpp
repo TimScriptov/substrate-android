@@ -1,4 +1,5 @@
-#include "Common.h"
+//#include "Common.h"
+
 using namespace std;
 
 jclass cls_PosixException;//com/saurik/substrate/PosixException

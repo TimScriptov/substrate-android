@@ -1,6 +1,6 @@
-#include "Common.h"
+//#include "Common.h"
 #include "DalvikHeader.h"
-#include "jni.h"
+#include <jni.h>
 
 
 #define LOGI(...)  __android_log_print(ANDROID_LOG_INFO, "CydiaSubstrate", __VA_ARGS__)

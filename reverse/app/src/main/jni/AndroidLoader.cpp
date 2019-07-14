@@ -1,4 +1,14 @@
-#include "Common.h"
+//#include "Common.h"
+#include <jni.h>
+#include <android/log.h>
+#include <stdio.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <dlfcn.h>
+#include "substrate.h"
+#include <elf.h>
+#include <dirent.h>
+#include <fcntl.h>
 
 /*
  * 注：以下代码均未考虑缓冲区溢出
